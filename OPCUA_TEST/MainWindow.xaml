@@ -5,20 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OPCUA_TEST"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="450">
-    <StackPanel Margin="20">
+        Title="MainWindow" Height="600" Width="450">
 
-        <!-- 서버 주소 입력 -->
-        <TextBox x:Name="ServerUrlBox" Text="opc.tcp://주소 입력:4840" Height="30" Margin="0,10" />
+    <StackPanel Margin="20" VerticalAlignment="Top">
+
+        <!-- Server IP -->
+        <Label Content="Server URL:"/>
+        <TextBox x:Name="ServerUrlBox" Text="opc.tcp://192.168.214.1:4840" Height="30" Margin="0,5"/>
+
+        <!-- Username -->
+        <Label Content="Username:"/>
+        <TextBox x:Name="UsernameBox" Height="30" Margin="0,5"/>
+
+        <!-- Password -->
+        <Label Content="Password:"/>
+        <PasswordBox x:Name="PasswordBox" Height="30" Margin="0,5"/>
+
+        <!-- Connection button to server -->
         <Button Content="Connect to Server" Click="ConnectButton_Click" Height="40" Margin="0,10"/>
-        <Label x:Name="ConnectionStatus" Content="Not Connected" Margin="0,10" />
+        <Label x:Name="ConnectionStatus" Content="Not Connected" Margin="0,10"/>
 
-        <!-- ✅ NodeId 여러 개 입력 (줄바꿈 가능) -->
+        <!-- NodeId  -->
+        <Label Content="Node IDs (one per line):"/>
         <TextBox x:Name="NodeIdsBox" 
                  Text="ns=2;s=Demo.Static.Scalar.Double&#x0a;ns=2;s=Demo.Static.Scalar.Int32" 
                  AcceptsReturn="True" 
-                 Height="100" Margin="0,10" />
+                 Height="100" Margin="0,5"/>
 
+        <!-- Read Button-->
         <Button Content="Read Node Values" Click="ReadNodesButton_Click" Height="40" Margin="0,10"/>
         <TextBlock x:Name="NodeValuesText" Text="Values will appear here" Margin="0,10" TextWrapping="Wrap"/>
 

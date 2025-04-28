@@ -54,36 +54,27 @@ namespace OPCUA_TEST
                     ApplicationType = ApplicationType.Client,
                     SecurityConfiguration = new SecurityConfiguration
                     {
-                        // Where the client stores the certificate for their own use
                         ApplicationCertificate = new CertificateIdentifier
                         {
                             StoreType = "Directory",
                             StorePath = "Certificates/Own",
                             SubjectName = "CN=SimpleOpcUaClient"
                         },
-
-                        // Where to store trusted server certificates
                         TrustedPeerCertificates = new CertificateTrustList
                         {
                             StoreType = "Directory",
                             StorePath = "Certificates/TrustedPeer"
                         },
-
-                        // Where to store certificate issuers
                         TrustedIssuerCertificates = new CertificateTrustList
                         {
                             StoreType = "Directory",
                             StorePath = "Certificates/TrustedIssuer"
                         },
-
-                        // Where to store rejected certificates
                         RejectedCertificateStore = new CertificateTrustList
                         {
                             StoreType = "Directory",
                             StorePath = "Certificates/Rejected"
                         },
-
-                        // Reject untrusted certificates by default (false)
                         AutoAcceptUntrustedCertificates = false
                     },
                     ClientConfiguration = new ClientConfiguration
@@ -92,10 +83,8 @@ namespace OPCUA_TEST
                     }
                 };
 
-                // Code to verify that the config setting is correct
                 await config.Validate(ApplicationType.Client);
 
-                // Makes it possible to ignore server certificate errors and still connect
                 config.CertificateValidator.CertificateValidation += (s, e2) =>
                 {
                     if (e2.Error.StatusCode == StatusCodes.BadCertificateUntrusted ||
@@ -105,19 +94,19 @@ namespace OPCUA_TEST
                     }
                 };
 
+                //  Server address
                 string serverUrl = ServerUrlBox.Text.Trim();
-
-                // Select the communication path (Endpoint) to use to connect to the server.
                 var selectedEndpoint = CoreClientUtils.SelectEndpoint(serverUrl, useSecurity: false);
-
-                // Create a ConfiguredEndpoint object to actually communicate with the server
                 var endpoint = new ConfiguredEndpoint(null, selectedEndpoint, EndpointConfiguration.Create(config));
 
+                // User ID and PW
+                string username = UsernameBox.Text.Trim();
+                string password = PasswordBox.Password.Trim();
 
-                var userIdentity = new UserIdentity("TEST", "testtest");
+                // Create UserIdentity 
+                var userIdentity = new UserIdentity(username, password);
 
-
-                // Create an actual connection (Session) with the server.
+                // Conntect session
                 _session = await Session.Create(config, endpoint, false, "SimpleOpcUaClient", 60000, userIdentity, null);
 
                 ConnectionStatus.Content = "Connected!";
@@ -127,7 +116,6 @@ namespace OPCUA_TEST
                 MessageBox.Show($"Connection Failed: {ex.Message}");
             }
         }
-
 
         // Read button from server data
         private async void ReadNodesButton_Click(object sender, RoutedEventArgs e)
