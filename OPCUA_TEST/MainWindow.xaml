@@ -1,0 +1,26 @@
+﻿<Window x:Class="OPCUA_TEST.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OPCUA_TEST"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="500" Width="450">
+    <StackPanel Margin="20">
+
+        <!-- 서버 주소 입력 -->
+        <TextBox x:Name="ServerUrlBox" Text="opc.tcp://주소 입력:4840" Height="30" Margin="0,10" />
+        <Button Content="Connect to Server" Click="ConnectButton_Click" Height="40" Margin="0,10"/>
+        <Label x:Name="ConnectionStatus" Content="Not Connected" Margin="0,10" />
+
+        <!-- ✅ NodeId 여러 개 입력 (줄바꿈 가능) -->
+        <TextBox x:Name="NodeIdsBox" 
+                 Text="ns=2;s=Demo.Static.Scalar.Double&#x0a;ns=2;s=Demo.Static.Scalar.Int32" 
+                 AcceptsReturn="True" 
+                 Height="100" Margin="0,10" />
+
+        <Button Content="Read Node Values" Click="ReadNodesButton_Click" Height="40" Margin="0,10"/>
+        <TextBlock x:Name="NodeValuesText" Text="Values will appear here" Margin="0,10" TextWrapping="Wrap"/>
+
+    </StackPanel>
+</Window>
