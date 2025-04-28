@@ -116,6 +116,7 @@ namespace OPCUA_TEST
 
                 var userIdentity = new UserIdentity("TEST", "testtest");
 
+
                 // Create an actual connection (Session) with the server.
                 _session = await Session.Create(config, endpoint, false, "SimpleOpcUaClient", 60000, userIdentity, null);
 
